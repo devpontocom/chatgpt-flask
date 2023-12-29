@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+        body {background-color: white;}
+        h1   {color: black;}
+        .div-centro {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 100%;
+            float: center;
+        }
+        .input_chat {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            width: 100%;
+        }
+        .button_chat {
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 100%;
+            float: center;
+        }
+        .user_message {
+            background-color: #e6e6e6;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 50%;
+            float: right;
+            display: flex;
+        }
+        .assistant_message {
+            background-color: #e6e6e6;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 50%;
+            float: left;
+            display: flex;
+        }
+        .user_logo, .assistant_logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+    </style>
+  </head>
+
+  <body>
+    
+    <h1>ChatGpt com OpenAI e Flask</h1>
+
+    <hr>
+    <br>
+    
+    <div class=div-centro>
+    {% if historico_chat %}
+        <div>
+            {% for message in historico_chat %} 
+                {% if message.role == 'user' %}
+                <div class="user_message">
+                    <img class="user_logo" src="../static/img/user.svg" alt="Logo do usuário">
+                    <span> {{ message.content }} </span>
+                </div>
+                {% else %}
+                <div class="assistant_message">
+                    <img class="user_logo" src="../static/img/assistente.svg" alt="Logo do usuário">
+                    <span> {{ message.content }} </span>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    </div>
+
+    <hr>
+    
+    <div class=div-centro>
+        <form method="POST" action="/">
+            <input class="input_chat" type="text" name="pergunta" placeholder="Digite sua pergunta" />
+            <input  class="button_chat" type="submit" name="submit" value="Enviar" />
+        </form>
+    </div>
+
+    <div class=div-centro>
+        <form method="POST" action="/delete-chat">
+            <label>Limpar historico de conversa? </label>
+            <input type="submit" name="clear" value="Limpar" />
+        </form>
+    </div>
+
+  </body>
+</html>
